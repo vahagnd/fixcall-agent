@@ -1,0 +1,10 @@
+services:
+  fixcall-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
+    ports:
+      - "8000:8000"

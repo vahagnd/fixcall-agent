@@ -22,3 +22,15 @@ class CallSummary(BaseModel):
 
     company_name: str | None = None
     call_outcome: str | None = None
+
+
+class CallAnalysis(BaseModel):
+    custom_analysis_data: CallSummary | None = None
+
+
+class Call(BaseModel):
+    call_analysis: CallAnalysis | None = None
+
+
+class RetellPayload(BaseModel):
+    call: Call | None = None
