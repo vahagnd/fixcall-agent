@@ -3,7 +3,7 @@
 # ===================================================================
 
 start:
-	docker compose up --build --remove-orphans -d
+	docker compose up --build --remove-orphans
 
 stop:
 	docker compose down
