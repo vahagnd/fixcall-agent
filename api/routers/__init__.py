@@ -3,9 +3,9 @@
 
 from fastapi import FastAPI
 
+from routers import debug
 from routers import (
     telegram,
-    debug,
 )
 
 

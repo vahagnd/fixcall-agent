@@ -22,8 +22,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Copy the service source code
-COPY *.py ./
-COPY routers ./routers
+COPY api/*.py ./
+COPY api/routers ./routers
 
 EXPOSE 8000
 
