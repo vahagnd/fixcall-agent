@@ -4,11 +4,11 @@
 from fastapi import FastAPI
 
 from routers import (
-    webhooks,
+    telegram,
     debug,
 )
 
 
-def init_routers(app: FastAPI):  # noqa: ANN201
-    app.include_router(webhooks.router)
+def init_routers(app: FastAPI):
+    app.include_router(telegram.router)
     app.include_router(debug.router)

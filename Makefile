@@ -36,3 +36,14 @@ ruff-fix:
 
 ruff-check:
 	uv run ruff check .
+
+# ===================================================================
+# ngrok
+# ===================================================================
+ngrok-url:
+	@curl -s http://localhost:4040/api/tunnels | python3 -c "import sys, json; print(json.load(sys.stdin)['tunnels'][0]['public_url'])"
+
+test-echo:
+	@URL=$$($(MAKE) -s ngrok-url); \
+	echo "Testing $$URL/debug/echo"; \
+	curl -X POST $$URL/debug/echo -H "Content-Type: application/json" -d '{"test":"hi"}'
