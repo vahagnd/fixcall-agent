@@ -1,7 +1,6 @@
-from models import CallSummary
 import httpx
+from models import CallSummary
 from settings import telegram_settings
-
 
 LABELS = {
     "standard_customer": "Standard Repair Call",

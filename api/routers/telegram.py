@@ -1,4 +1,5 @@
 import logging
+
 from fastapi import APIRouter, HTTPException
 from models import RetellPayload
 from utils import format_message, send_telegram_message
@@ -9,7 +10,7 @@ router = APIRouter(prefix="/telegram", tags=["telegram"])
 
 
 @router.post("/send_notification")
-async def send_notification(payload: RetellPayload):
+async def send_notification(payload: RetellPayload) -> dict[str, bool]:
     call = payload.call
     analysis = call.call_analysis if call else None
     data = analysis.custom_analysis_data if analysis else None
