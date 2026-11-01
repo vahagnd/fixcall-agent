@@ -11,6 +11,21 @@ stop:
 restart: stop start
 
 # ===================================================================
+# Production (Caddy, no ngrok)
+# ===================================================================
+
+PROD_COMPOSE = docker compose -f docker-compose.prod.yml
+
+prod-start:
+	$(PROD_COMPOSE) up -d --build --remove-orphans
+
+prod-stop:
+	$(PROD_COMPOSE) down
+
+prod-logs:
+	$(PROD_COMPOSE) logs -f
+
+# ===================================================================
 # Development
 # ===================================================================
 
