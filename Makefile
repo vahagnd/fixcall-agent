@@ -15,6 +15,14 @@ restart: stop start
 # ===================================================================
 
 PROD_COMPOSE = docker compose -f docker-compose.prod.yml
+PROD_DIR = /opt/fixcall-agent
+PROD_SSH = ssh -t root@$(call env,PROD_HOST)
+
+# Read a variable from .env, fail if missing: $(call env,NAME)
+env = $(or $(shell grep '^$(1)=' .env 2>/dev/null | cut -d= -f2-),$(error $(1) is not set in .env))
+
+prod-ssh:
+	@$(PROD_SSH)
 
 prod-start:
 	$(PROD_COMPOSE) up -d --build --remove-orphans
@@ -24,6 +32,11 @@ prod-stop:
 
 prod-logs:
 	$(PROD_COMPOSE) logs -f
+
+prod-test-echo:
+	@DOMAIN=$(call env,DOMAIN); \
+	echo "Testing https://$$DOMAIN/debug/echo"; \
+	curl -fsS -X POST https://$$DOMAIN/debug/echo -H "Content-Type: application/json" -d '{"test":"hi"}'; echo
 
 # ===================================================================
 # Development
