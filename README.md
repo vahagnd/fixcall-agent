@@ -23,3 +23,17 @@ A lightweight FastAPI backend that bridges **Retell AI** post-call webhooks with
 5. **Backend processes the payload and sends a Telegram message.**
 
     The `/telegram/send_notification` endpoint parses the Retell payload, pulls out the structured call summary, formats it into a readable message, and delivers it to a configured [Telegram channel](https://t.me/+zJCJEcYkn3YxYjgy) via the Telegram Bot API — giving the business owner an instant notification for every call.
+
+## Environments & deployment
+
+> ⚠️ **Pushing to `master` deploys to production automatically.** Work on `develop`; merge into `master` only when ready to ship.
+
+| Environment | Where | Run | Public URL |
+|---|---|---|---|
+| dev | local machine | `make start` (api + ngrok) | ngrok URL (`make ngrok-url`) |
+| prod | Linode VM, `/opt/fixcall-agent` | `make prod-start` (api + Caddy) | `https://$DOMAIN` |
+
+- On every push to `master`, `.github/workflows/deploy.yml` SSHes into the server and runs `git pull && make prod-start`. A deploy can also be started manually: **Actions → Deploy to prod → Run workflow**.
+- Required GitHub secrets: `PROD_HOST` (server IP) and `PROD_SSH_KEY` (private deploy key).
+- Prod secrets live only in `/opt/fixcall-agent/.env` on the server (see `.env.example`). They are never committed.
+- Retell's webhook URL in prod: `https://$DOMAIN/telegram/send_notification`.
